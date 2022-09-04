@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load gravatar %}
+{% block title %}
+تغییر مشخصات پروفایل
+{% endblock %}
+{% block content %} 
+
+    <main>
+        <section class="py-5">
+            <div class="container">
+               <div class="row d-flex justify-content-center">
+                <div class="col-sm-9 col-md-11 col-lg-10">
+                    <div class="user-panel custom-bg">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                            {% if form.non_field_errors %}
+                            <div class="alert alert-danger">{{form.non_field_errors}}</div>
+                            {% endif %}
+                            {% if form.image.errors %}
+                            <div class="alert alert-danger">{{form.image.errors}}</div>
+                            {% endif %}
+                            {% if form.full_name.errors %}
+                            <div class="alert alert-danger">{{form.full_name.errors}}</div>
+                            {% endif %}
+                            {% if form.email.errors %}
+                            <div class="alert alert-danger">{{form.email.errors}}</div>
+                            {% endif %}
+                            {% if form.phoneNumber.errors %}
+                            <div class="alert alert-danger">{{form.phoneNumber.errors}}</div>
+                            {% endif %}
+                            {% if form.username.errors %}
+                            <div class="alert alert-danger">{{form.username.errors}}</div>
+                            {% endif %}
+                        <div class="user-panel-box">
+                            <div class="user-panel-profile">
+                                {% if user.image %}
+                                <img src="{{user.image.url}}" alt="userimage">
+                                {% else %}
+                                <img src="{% gravatar_url user.email 150 %}" alt="userimage">
+                                {% endif %}
+                            </div>
+                            <div class="change-profile-btn">
+                                <!-- <button class="btn custom-btn" onclick="get_user_image()">تغییر عکس پروفایل</button> -->
+                                <label for="select-files" class="btn custom-btn">
+                                    <span>تغییر عکس پروفایل</span>
+                                    {{form.image}}
+                                </label>
+                            </div>
+                            <!-- item -->
+                            <div class="user-panel-field">
+                                <i class="fa fa-user"></i>
+                                {{form.full_name}}
+                            </div>
+                            <!-- item -->
+                            <div class="user-panel-field">
+                                <i class="fa fa-envelope"></i>
+                                {{form.email}}
+                           </div>
+                            <!-- item -->
+                            <div class="user-panel-field">
+                                <i class="fa fa-phone"></i>
+                                {{form.phoneNumber}}
+                            </div>
+                            <!-- item -->
+                            <div class="user-panel-field">
+                                <i class="fa fa-user-circle"></i>
+                                {{form.username}}
+                            </div>
+
+                        </div>
+                        <div class="d-flex justify-content-center mt-3 ">
+                            <input type="submit" class="btn custom-btn w-50" value="اعمال تغییرات">
+                        </div>   
+                    </form>
+
+                    </div>
+                </div>
+               </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}
+
+   

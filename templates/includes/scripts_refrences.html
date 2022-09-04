@@ -1,0 +1,59 @@
+{% load static %}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'components/bootstrap/bootstrap.bundle.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+
+    <script src="{% static 'components/owl-carousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/like.js' %}"></script>
+    <script>
+        // video-player
+        const videobtn = document.querySelector('.video-btn');
+        const video = document.querySelector('.video');
+        const videotag = document.querySelector('video')
+        const videoDescription = document.querySelector('.video-description')
+        const closeBtn = document.querySelector('.close-btn')
+        const videoPoster = document.querySelector('.video-poster')
+        const videoOverlay = document.querySelector('.video-overlay')
+        function stopPlayer() {
+            videobtn.style.display = "block";
+            closeBtn.style.display = 'none';
+            videoPoster.style.display = 'inline'
+            video.style.zIndex = '-1'
+            videotag.pause()
+            videotag.style.borderRadius = '20px'
+            videoDescription.style.display = 'flex'
+            videotag.controls = false
+            videotag.style.borderRadius = '15px'
+            videoOverlay.style.display = 'block'
+        };
+
+        function playvideo() {
+            videobtn.style.display = "none";
+            video.style.zIndex = '22222'
+            videotag.autoplay = true
+            videotag.play()
+            videotag.style.borderRadius = '20px'
+            videotag.controls = true
+            videoDescription.style.display = 'none'
+            closeBtn.style.display = 'block'
+            videoPoster.style.display = 'none'
+            videoOverlay.style.display = 'none'
+        }
+
+            function nolink(){
+                element=document.getElementById("alert")
+                element.style.opacity=1
+            }
+            function noopacity(){
+                element=document.getElementById("alert")
+                element.style.opacity=0
+            }
+
+
+    </script>

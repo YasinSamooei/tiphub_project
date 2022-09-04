@@ -1,0 +1,59 @@
+{% extends 'registration/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% block title-meta %}
+	افزودن آموزش
+{% endblock %}{% endblock %}
+
+{% block main %}
+<div class="col-md-12">
+	<div class="card card-primary">
+		<div class="card-header">
+			<h3 class="card-title mb-0 float-left">افزودن ویدئو</h3>
+		</div>
+		<div class="card-body">
+			<form method="post" enctype="multipart/form-data">{% csrf_token %}
+				<div class="row">
+					<div class="col-6">
+						{{ form.title|as_crispy_field }}
+					</div>
+					<div class="col-6">
+						{{ form.time|as_crispy_field }}
+					</div>
+					<div class="col-12">
+						{{ form.slug|as_crispy_field }}
+					</div>
+					<div class="col-12">
+						{{ form.description|as_crispy_field }}
+					</div>
+					<div class="col-6">
+						{{ form.category|as_crispy_field }}
+					</div>
+					<div class="col-6">
+						{{ form.image|as_crispy_field }}
+					</div>
+					<div class="col-6">
+						{{ form.publish|as_crispy_field }}
+					</div>
+					<div class="col-6">
+						{{ form.video|as_crispy_field }}
+					</div>
+					{% if user.is_admin %}
+						<div class="col-6">
+							{{ form.auther|as_crispy_field }}
+						</div>
+						<div class="col-6">
+							{{ form.status|as_crispy_field }}
+						</div>
+					{% else %}
+						<p></p>
+				{% endif %}
+				</div>
+				<input class="btn btn-success" type="submit" value="ارسال آموزش"> 
+				{% if user.is_admin and request.resolver_match.kwargs.pk %}
+				<a href="{% url 'video:video-delete' request.resolver_match.kwargs.pk %}" class="btn btn-danger">حذف</a>
+				{% endif %}
+			</form>
+		</div>
+</div>
+{% endblock %}

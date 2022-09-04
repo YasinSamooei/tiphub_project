@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load comment_tags %} 
+{% load hitcount_tags %}
+{% load ratings %}
+{% load gravatar %}
+{% block title %}
+{{video.slug}}
+{% endblock %}
+{% block content %}
+    <main>
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div>
+                            <!-- video -->
+                            <div class="video-player-box">
+                                <div class="video-icon">
+                                    <div class="btn video-btn" onclick="playvideo()" id="videobtn">
+                                        <img src="{% static 'image/play-video-btn.png' %}" alt="">
+                                    </div>
+                                </div>
+                                <div class="video">
+                                    <video width="100%" id="myVideo" autoplay>
+                                        <source src="{{video.video.url}}" type="video/mp4">
+                                    </video>
+                                    <img src="{{video.image.url}}" width="100%" height="100%"
+                                        class="position-absolute video-poster" alt="">
+
+                                    <div class="video-overlay"></div>
+                                    <div class="video-description px-2 text-white">
+
+                                        <p> {{video.time}}</p>
+                                    </div>
+                                    <h5 class="close-btn" onclick="stopPlayer()">X</h5>
+                                </div>
+                            </div>
+                            <!-- end video -->
+                            <!-- title -->
+                            <h3 class="video-title my-3"> {{video.title}}
+                            </h3>
+                            <div class="d-flex align-items-center justify-content-between border-bottom pb-3">
+                                <p class="color78">{{video.publish|naturaltime}}</p>
+                                <div class="d-flex align-items-center view-like">
+                                    <div class="mx-3">
+                                        <span>{% get_hit_count for video %}</span>
+                                        <i class="fa fa-eye"></i>
+                                    </div>
+                                    <div>
+                                        <span id="count">{{video.likes.all.count}}</span>
+                                        {% if liked %}
+                                        <a onclick="like('{{video.slug}}','{{video.id}}')"><i class="fa fa-heart" type='button' id="like" aria-hidden="true"></i></a>
+                                        {% else %}
+                                        <a onclick="like('{{video.slug}}','{{video.id}}')"><i class="fa fa-heart-o" type='button' id="like" aria-hidden="true"></i></a>
+                                        {% endif %}
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+                            <!-- description -->
+                            <div class="border-bottom pb-3">
+                                <h4 class="my-3" id="body">درباره فیلم</h4>
+                                <p class="color78">{{video.description|safe}}</p>
+
+                                <div class="labels">
+                                    <h4 class="my-3">برچسب ها</h4>
+                                    <ul class="d-flex align-items-center">
+                                        {% for tag in video.category.all %}
+                                        <li><a href="{% url 'home:category_detail' tag.slug %}" title="">#{{tag.title}}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div><hr>
+                                <div class="labels">
+                                    <h4 class="my-3">امتیاز دهی</h4>
+                                    {% ratings video %}
+                                </div>
+                                
+                            </div>
+                            <!-- end des -->
+
+                            <!-- comments -->
+                            <div>
+                                
+                                {% render_comments video request %} 
+
+                            </div>
+                            <!-- end comments -->
+
+                        </div>
+                    </div>
+                    <!-- main -->
+                    <!-- side -->
+                    <aside class="col-md-4 ">
+                        <div class="custom-bg p-2 teacher-card">
+                            <div class="border-bottom py-3 text-center">
+                                <h4>درباره استاد</h4>
+                            </div>
+                            <div class="d-flex align-items-center py-3">
+                                {% if video.auther.image %}
+                                <a href="{{video.auther.image.url}}"><img src="{{video.auther.image.url}}" alt="userimage" class="teacher-profile"></a>
+                                {% else %}
+                                <a href="{% gravatar_url video.auther.email 150 %}"><img src="{% gravatar_url video.auther.email 150 %}" alt="userimage" class="teacher-profile"></a>
+                                {% endif %}
+                                <p class="user-name pr-2">{{video.auther.full_name}}</p>
+                            </div>
+                            {% if video.auther.description %}
+                            <p class="color78 teacher-description py-3">{{video.auther.description}}</p>
+                            {% else %}
+                            <p class="color78 teacher-description py-3 h3">موردی ثبت نشده است</p>
+                            {% endif %}
+                                <div class="teacher-social-media d-flex align-items-center justify-content-center flex-wrap">
+                                    {% if video.auther.instagram %}
+                                    <a href="{{video.auther.instagram}}"> <i class="fa fa-instagram"></i></a>
+                                    {% else %}
+                                    <a onclick="nolink()"> <i class="fa fa-instagram"></i></a>
+                                    {% endif %}
+
+                                    {% if video.auther.github %}
+                                    <a href="{{video.auther.github}}"> <i class="fa fa-github"></i></a>
+                                    {% else %}
+                                    <a onclick="nolink()"> <i class="fa fa-github"></i></a>
+                                    {% endif %}
+                                    
+                                    {% if video.auther.linkdin %}
+                                    <a href="{{video.auther.linkdin}}"> <i class="fa fa-linkedin"></i></a>
+                                    {% else %}
+                                    <a onclick="nolink()"> <i class="fa fa-linkedin"></i></a>
+                                    {% endif %}
+
+                                    {% if video.auther.telegram %}
+                                    <a href="{{video.auther.telegram}}"> <i class="fa fa-telegram"></i></a>
+                                    {% else %}
+                                    <a onclick="nolink()"> <i class="fa fa-telegram"></i></a>
+                                    {% endif %}
+                                </div>
+                                <p class="text-danger h6 text-center my-3" id="alert" style="opacity: 0;"><a class="text-primary h6 " onclick="noopacity()" style="cursor: pointer;">X</a>             
+                                    لینک موجود نمی باشد</p>
+                        </div>
+                    </aside>
+
+                    <!-- end side -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock %}

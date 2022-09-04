@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load ratings %}
+{% block title %}{% block title-meta %}
+صفحه اصلی
+{% endblock %}{% endblock %}
+{% block content %} 
+    <main>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h2 class="title-section">تازه ترین ویدیو ها</h2>
+                    <a href="{% url 'video:AllVideos' %}" class="btn custom-btn">
+                        نمایش همه
+                    </a>
+                </div>
+                <div class="row">
+                    <!-- item -->
+                {% if recent_videos %}
+                    {% for video in recent_videos %}
+                    <div class="col-md-6 col-lg-4 my-2">
+                        <div class="custom-bg">
+                            <div class="video-card">
+                                <a href=" {% if request.user.is_authenticated %}{{video.get_absolute_url}}{% else %}{% url 'accounts:register' %}{% endif %}" class="position-relative d-block ">
+                                    <img src="{{video.image.url}}" alt="" class="img-fluid w-100 h-100">
+                                    <div class="video-play-btn">
+                                        <i class="fa fa-play"></i>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between video-category-time">
+                                        <h6 class="">{{video.title}}</h6>
+                                        <span class="vid-time">{{video.time}}</span>
+                                    </div>
+                                    <div class="video-card-details">
+                                        <div>
+                                            <span>{{video.hit_count_generic.all.count}}</span>
+                                            <i class="fa fa-eye"></i>
+                                        </div>
+                                        <div>
+                                            <span>{{video.likes.all.count}}</span>
+                                            <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div>
+                                            <span>{{video.comments.all.count}}</span>
+                                            <i class="fa fa-comment"></i>
+                                        </div>
+                                    </div>
+                                    <div class="article-overlay"></div>
+                                </a>
+
+                            </div>
+                            <a href="video-detail.html">
+                                <h5 class="video-card-title m-2">{{video.description|truncatechars:45|safe}}</h5>
+                            </a>
+                            <div class="my-3 pb-3 mx-2">
+                                <i class="fa fa-user  ml-1 "></i>
+                                <span>{{video.auther.full_name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- end item -->
+                {% else %}
+                <i class="fa fa-nothing  mx-3 "></i>
+                <h3>متاسفانه محتوایی برای نمایش موجود نیست</h3>
+                {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h2 class="title-section">پربازدید ترین ویدئوها</h2>
+                    <a href="{% url 'video:all-videos-hit-count' %}" class="btn custom-btn">
+                        نمایش همه
+                    </a>
+                </div>
+                <div class="row">
+                {% if popular_posts %}
+                    {% for video in popular_posts %}
+                    <div class="col-md-6 col-lg-4 my-2">
+                        <div class="custom-bg">
+                            <div class="video-card">
+                                <a href=" {% if request.user.is_authenticated %}{{video.get_absolute_url}}{% else %}{% url 'accounts:register' %}{% endif %}" class="position-relative d-block ">
+                                    <img src="{{video.image.url}}" alt="" class="img-fluid w-100 h-100">
+                                    <div class="video-play-btn">
+                                        <i class="fa fa-play"></i>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between video-category-time">
+                                        <h6 class="">{{video.title}}</h6>
+                                        <span class="vid-time">{{video.time}}</span>
+                                    </div>
+                                    <div class="video-card-details">
+                                        <div>
+                                            <span>{{video.hit_count_generic.all.count}}</span>
+                                            <i class="fa fa-eye"></i>
+                                        </div>
+                                        <div>
+                                            <span>{{video.likes.all.count}}</span>
+                                            <i class="fa fa-heart"></i>
+                                        </div>
+                                        <div>
+                                            <span>{{video.comments.all.count}}</span>
+                                            <i class="fa fa-comment"></i>
+                                        </div>
+                                    </div>
+                                    <div class="article-overlay"></div>
+                                </a>
+
+                            </div>
+                            <a href="video-detail.html">
+                                <h5 class="video-card-title m-2">{{video.description|truncatechars:45|safe}}</h5>
+                            </a>
+                            <div class="my-3 pb-3 mx-2">
+                                <i class="fa fa-user  ml-1 "></i>
+                                <span>{{video.auther.full_name}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <i class="fa fa-no  mx-3 "></i>
+                <h3>متاسفانه محتوایی برای نمایش موجود نیست</h3>
+                {% endif %}
+                </div>
+            </div>
+        </section>
+
+
+
+    </main>
+{% endblock %}

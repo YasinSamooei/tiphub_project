@@ -1,0 +1,163 @@
+{% load static %}
+{% load gravatar %}
+<header class="position-relative">
+    <div class="main-header position-relative">
+
+        <div class="nav-header-box mob1 d-md-flex d-lg-flex align-items-center justify-content-between">
+
+            <div class="d-flex flex-column flex-md-row align-items-center pr-md-4">
+                <div class="logo d-flex justify-content-center align-items-center ml-3">
+                    <a href="{% url 'home:MainPage' %}"><img src="{{logo.image.url}}" class="logo-img img-fluid" alt="" /></a>
+                </div>
+                <form action="{% url 'home:search' %}">
+                <div class="nav-search-btn">
+                    <input type="search" placeholder="جستجو" name="q">
+                    <i class="fa fa-search"></i>
+                </div>
+                </form>
+
+            </div>
+            {% if request.user.is_authenticated %}
+            <div class="d-block d-md-flex align-items-center pl-md-4">
+                <div class="dropdown notification-box">
+                    <div class="position-relative d-none d-md-block " type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="{% static 'image/notification.png' %}" class="notification-img" alt="">
+                        <div class="badge">{{user.notifs.all.count}}</div>
+                    </div>
+                    <div class="dropdown-menu notification-menu-items custom-bg"
+                        aria-labelledby="dropdownMenuButton">
+                        {% for notif in user.notifs.all %}
+                        <a class="border-bottom" href="{{notif.url}}">{{notif.title}}</a>
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+                <div class="header-login d-none d-md-block">
+                    <div class="notification-box dropdown">
+                        <a href="" class="btn login-btn" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {% if user.image %}
+                            <img src="{{user.image.url}}" alt="userimage">
+                            {% else %}
+                            <img src="{% gravatar_url user.email 150 %}" alt="userimage">
+                            {% endif %}
+                        </a>
+                        <div class="dropdown-menu account-menu-items custom-bg"
+                            aria-labelledby="dropdownMenuButton">
+                            <a class="" href="{% url 'accounts:userpanel' %}"> پروفایل</a>
+                            <a class="" href="{% url 'home:likes' %}"> مورد علاقه ها</a>
+                            <a class="" href="{% url 'accounts:logout' %}"> خروج</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="d-block d-md-flex align-items-center pl-md-4">
+                <div class="header-account mx-3 d-none d-md-block">
+                    <div class="notification-box dropdown">
+                        <a href="" class="btn account-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="prepend-icon ml-1">
+                                <i class="fa fa-user-circle"></i>
+                            </span> <span>حساب کاربری </span>
+                        </a>
+                        <div class="dropdown-menu account-menu-items custom-bg" aria-labelledby="dropdownMenuButton">
+                            <a class="" href="{% url 'accounts:login' %}"> <i class=" fa fa-account"></i>
+                                ورود</a>
+                            <a class="" href="{% url 'accounts:register' %}"> ثبت نام</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <nav class="nav-menu p-0 m-0 d-flex d-sm-flex d-md-none d-lg-none">
+            {% for cat in categoris %}
+                {% if cat.parent == None %}
+                <li id="" class="mx-3"><a class="nav-menu-item-mob">{{cat.title}}
+                    <i class="fa fa-chevron-left chev-icon pr-1"></i>
+                    </a>
+                    <ul class="sub-menu-mob">
+                        {% for tag in cat.children.all %}
+                        <a href="{% url 'home:category_detail' tag.slug %}">{{tag.title}}</a>
+                        {% endfor %}
+                    </ul>
+                </li>
+                {% endif %}
+            {% endfor %}
+            </nav>
+
+        </div>
+
+
+        <section
+            class="nav-header-box-mob d-flex d-sm-flex d-md-none  align-items-center justify-content-between d-md-none d-lg-none position-fixed">
+
+            <div class="hamburger-icon">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div>
+            <div class="logo">
+                <a href="{% url 'home:MainPage' %}"><img src="{{logo.image.url}}" class="logo-img img-fluid" alt="" /></a>
+            </div>
+            {% if request.user.is_authenticated %}
+            <div class="d-flex align-items-center">
+                <div class="dropdown notification-box">
+                    <div class="position-relative d-block d-md-none " type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="{% static 'image/notification.png' %}" class="notification-img" alt="">
+                        <div class="badge">{{user.notifs.all.count}}</div>
+                    </div>
+                    <div class="dropdown-menu notification-menu-items custom-bg"
+                        aria-labelledby="dropdownMenuButton">
+                        {% for notif in user.notifs.all %}
+                        <a class="border-bottom" href="{{notif.url}}">{{notif.title}}</a>
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+                <div class="header-account">
+                    <div class="notification-box dropdown">
+                        <a href="" class="btn login-btn" type="button" id="dropdownMenuButton"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {% if user.image %}
+                            <img src="{{user.image.url}}" alt="userimage">
+                            {% else %}
+                            <img src="{% gravatar_url user.email 150 %}" alt="userimage">
+                            {% endif %}
+                        </a>
+                        <div class="dropdown-menu account-menu-items custom-bg"
+                            aria-labelledby="dropdownMenuButton">
+                            <a class="" href="{% url 'accounts:userpanel' %}"> پروفایل</a>
+                            <a class="" href="{% url 'home:likes' %}"> مورد علاقه ها</a>
+                            <a class="" href="{% url 'accounts:logout' %}"> خروج</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+            <div class="header-account mx-3">
+                <div class="notification-box dropdown">
+                    <a href="" class="btn account-btn" type="button" id="dropdownMenuButton"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="prepend-icon ml-1">
+                            <i class="fa fa-user-circle"></i>
+                        </span> <span>حساب کاربری </span>
+                    </a>
+                    <div class="dropdown-menu account-menu-items custom-bg"
+                        aria-labelledby="dropdownMenuButton">
+                        <a class="" href="{% url 'accounts:login' %}"> <i class=" fa fa-account"></i>
+                            ورود</a>
+                        <a class="" href="{% url 'accounts:register' %}"> ثبت نام</a>
+                    </div>
+                </div>
+            </div>
+            </div>
+            {% endif %}
+
+        </section>
+    </div>
+
+</header>

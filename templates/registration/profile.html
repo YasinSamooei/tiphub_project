@@ -1,0 +1,58 @@
+{% extends 'registration/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% block title-meta %}
+	پروفایل کاربری
+{% endblock %}{% endblock %}
+
+{% block main %}
+<div class="col-md-12">
+  <div class="card card-primary">
+    <div class="card-header">
+      <h3 class="card-title mb-0 float-left">پروفایل کاربری</h3>
+    </div>
+		<div class="card-body">
+			<form method="post" enctype="multipart/form-data">{% csrf_token %}
+		    <div class="row">
+		      <div class="col-6">
+		        {{ form.username|as_crispy_field }}
+		      </div>
+		      <div class="col-6">
+		        {{ form.email|as_crispy_field }}
+		      </div>
+		      <div class="container">
+		      	<div class="alert alert-warning">
+			      	<label>گذرواژه</label>
+			      	<p class="mb-0">برای تغییر گذرواژه <a class="alert-link" href="{% url 'accounts:password_change' %}">کلیک</a> کنید.</p>
+		        </div>
+		      </div>
+			  <div class="col-12">
+		        {{ form.image|as_crispy_field }}
+		      </div>
+		      <div class="col-6">
+		        {{ form.full_name|as_crispy_field }}
+		      </div>
+			  <div class="col-6">
+		        {{ form.description|as_crispy_field }}
+		      </div>
+			  <div class="col-6">
+		        {{ form.instagram|as_crispy_field }}
+		      </div>
+			  <div class="col-6">
+		        {{ form.telegram|as_crispy_field }}
+		      </div>
+			  <div class="col-6">
+		        {{ form.linkdin|as_crispy_field }}
+		      </div>
+			  <div class="col-6">
+		        {{ form.github|as_crispy_field }}
+		      </div>
+		      <div class="col-6">
+		        {{ form.is_teacher|as_crispy_field }}
+		      </div>
+		    </div>
+				<button class="btn btn-success">ویرایش اطلاعات</button>
+			</form>
+		</div>
+</div>
+{% endblock %}

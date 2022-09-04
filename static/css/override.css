@@ -1,0 +1,7 @@
+@font-face{
+    font-family:Btitr ;
+    src:url("../font-icon/static/BTitrBd.ttf")
+}
+*{
+    font-family: Btitr;
+}

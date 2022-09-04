@@ -1,0 +1,15 @@
+{% load static %}
+<nav class="nav-menu nav-menu-pc  d-none d-md-flex px-4" id="navbar">
+    {% for cat in categoris %}
+        {% if cat.parent == None %}
+        <li id="" class="mx-3 menu-item"><a href="{% url 'home:category_detail' cat.slug %}" class="nav-menu-item ">{{cat.title}}</a>
+            <ul class="sub-menu">
+                {% for tag in cat.children.all %}
+                <a href="{% url 'home:category_detail' tag.slug %}">{{tag.title}}</a>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endif %}
+    {% endfor %}
+  
+</nav>

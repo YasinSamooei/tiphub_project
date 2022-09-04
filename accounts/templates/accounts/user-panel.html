@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+پنل حساب کاربری
+{% endblock title %}
+{% block content %}
+    <main>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-sm-9 col-md-8 col-lg-8">
+                       
+                            <!-- item1 -->
+
+                            <div class="p-3 custom-bg user-details user-item my-2">
+                                <div class="row">
+                                    {% if request.user.full_name %}
+                                    <div class="col-lg-6 mb-4">
+                                        <p class="">نام و نام خانوادگی:</p>
+                                        <h6 class=" font-weight-bold">{{request.user.full_name}}</h6>
+                                    </div>
+                                    {% else %}
+                                    <div class="col-lg-6 mb-4">
+                                    <p class="">نام و نام خانوادگی:</p>
+                                    <h6 class=" font-weight-bold">نام و نام خانوادگی وارد نشده است</h6>
+                                    </div>
+                                    {% endif %}
+                                    <div class="col-lg-6 mb-4">
+                                        <p class="">پست الکترونیک:</p>
+                                        <h6 class=" font-weight-bold">{{request.user.email}}</h6>
+                                    </div>
+                                    <div class="col-lg-6 mb-4">
+                                        <p class="">شماره تلفن همراه:</p>
+                                        <h6 class=" font-weight-bold">{% if request.user.phoneNumber %}{{request.user.phoneNumber}}{% else %}شماره تلفن وارد نشده{% endif %}</h6>
+                                    </div>
+                                    <div class="col-lg-6 mb-4">
+                                        <p class="">نام کاربری:</p>
+                                        <h6 class=" font-weight-bold">{% if request.user.username %}{{request.user.username}}{% else %} نام کاربری وارد نشده{% endif %}</h6>
+                                    </div>
+                                    <div class="col-12 my-2">
+                                        <div class="text-center">
+                                            <a class="" href="{% url 'accounts:password_change' %}">
+                                                <i class="fa fa-edit"></i>
+                                                تغییر گذرواژه
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="text-center">
+                                            <a class="" href="{% url 'accounts:edit' %}">
+                                                <i class="fa fa-edit"></i>
+                                                ویرایش اطلاعات شخصی
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+        </section>
+
+
+    </main>
+{% endblock %}
+
+    

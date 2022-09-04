@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+{% include "includes/head_refrenses.html" %}
+</head>
+
+<body>
+
+<!-- top-header -->
+<div class="shadow position-fixed w-100 h-100 d-md-none d-lg-none"></div>
+<!-- top-header -->
+<!-- Header -->
+{% include "includes/header.html" %}
+{% include "includes/navbar.html" %}
+{% block content %}
+
+
+{% endblock %}
+
+
+
+{% include "includes/footer.html" %}
+  
+{% include "includes/scripts_refrences.html" %}
+  
+</body>
+  </html>

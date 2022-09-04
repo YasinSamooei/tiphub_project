@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{% block title-meta %}
+	موارد مورد علاقه
+{% endblock %}{% endblock %}
+{% block content %}
+<main class="my-5">
+<div class="col-md-8 text-center mx-auto">
+  <div class="card card-danger">
+    <div class="card-header bg-success">
+      <h3 class="card-title mb-0 float-right">موارد مورد علاقه</h3>
+    </div>
+		<div class="card-body py-4 bg-light">
+        {% if likes %}
+            {% for like in likes %}
+			<a href="{{like.video.get_absolute_url}}" class="text-center h4 my-4"><img src="{{like.video.image.url}}" alt="" class="card-image" width="60px" height="60px" style="border-radius: 50%">          فیلم {{like.video.title}} از استاد {{like.video.auther.full_name}}</a>
+      <hr class="my-3">
+            {% endfor %}
+        {% else %}
+            <p class="text-center h3">شما هیچ موردی را نپسندیده اید</p>
+        {% endif %}
+		</div>
+</div>
+</main>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% load static %}
+{% load gravatar %}
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+      <img src="{% static 'registration/adminlte/assets/img/AdminLTELogo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text">وبلاگ جنگویی</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class=" mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          {% if user.image %}
+          <a href="{{user.image.url}}" target="_blank"><img src="{{user.image.url}}" class="img-circle elevation-2" alt="userimage" width="50px" height="50px"></a>
+          {% else %}
+          <img src="{% gravatar_url user.email 50 %}" class="img-circle elevation-2" alt="{{user.email}}">
+          {% endif %}
+        </div>
+        <div class="info">
+          <a href="#" class="d-block mx-3 my-3">
+            {% if user.full_name %}
+              {{user.full_name}}
+            {% else %}
+              {{user.username}}
+            {% endif %}
+          </a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          {% if user.is_admin or user.is_teacher %}
+            <li class="nav-item has-treeview menu-open">
+              <a href="#" class="nav-link active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  آموزش ها
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{% url 'video:VideoList' %}" class="nav-link {% if request.resolver_match.url_name == 'VideoList' %}active{% endif %}">
+                    <i class="fa fa-list nav-icon"></i>
+                    <p>
+                      لیست آموزش ها
+                    </p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'video:video-create' %}" class="nav-link {% if request.resolver_match.url_name == 'video-create' %}active{% endif %}">
+                    <i class="fa fa-edit nav-icon"></i>
+                    <p>
+                      افزودن آموزش
+                    </p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+          {% endif %}
+          <li class="nav-item">
+            <a href="{% url 'accounts:profile' %}" class="nav-link {% if request.resolver_match.url_name == 'profile' %}active{% endif %}">
+              <i class="fa fa-user nav-icon"></i>
+              <p>
+                پروفایل
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
