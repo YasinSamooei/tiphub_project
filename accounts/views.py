@@ -60,7 +60,7 @@ class EditProfileView(UpdateView):
     model = User
     form_class = EditUserForm
     template_name = 'accounts/edit-user-panel.html'
-    success_url = reverse_lazy('account:userpanel')
+    success_url = reverse_lazy('accounts:userpanel')
 
     def get_object(self):
         return User.objects.get(pk=self.request.user.pk)
