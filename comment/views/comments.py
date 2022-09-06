@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.contrib import messages
-
+from accounts.models import Notification
 from comment.models import Comment
 from comment.forms import CommentForm
 from comment.utils import get_comment_from_key, get_user_for_request, CommentFailReason
@@ -42,6 +42,29 @@ class CreateComment(CanCreateMixin, CommentCreateMixin):
         )
         self.comment = self.perform_create(temp_comment, self.request)
         self.data = render_to_string(self.get_template_names(), self.get_context_data(), request=self.request)
+                # send email section
+
+        video = self.comment.content_object
+        auther = video.auther
+        user = self.comment.user
+        if auther == user:
+            auther = False
+            user = False
+        parent = False
+        if self.comment.parent:
+            parent = self.comment.parent.user
+            if parent in [auther, user]:
+                parent = False
+
+        if auther:
+            Notification.objects.create(user=auther,url=video.get_absolute_url(),title=f"پیام جدید در {video.title}")
+
+        if user:
+            pass
+
+        if parent:
+            Notification.objects.create(user=parent,url=video.get_absolute_url(),title=f"پاسخ به پیام شما در آموزش {video.title}")
+
         return UTF8JsonResponse(self.json())
 
     def form_invalid(self, form):
