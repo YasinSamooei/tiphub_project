@@ -28,7 +28,7 @@
                     <div class="dropdown-menu notification-menu-items custom-bg"
                         aria-labelledby="dropdownMenuButton">
                         {% for notif in user.notifs.all %}
-                        <a class="border-bottom" href="{{notif.url}}">{{notif.title}}</a>
+                        <a class="border-bottom" href="{{notif.url}}" onclick="delete_notif('{{notif.id}}')">{{notif.title}}</a>
                         {% endfor %}
 
                     </div>
@@ -159,5 +159,9 @@
 
         </section>
     </div>
-
+<script>
+    function delete_notif(id){
+    $.get(`/video/delete/notif/${id}`).then(response=>{"delete-notif"})
+    }
+</script>
 </header>

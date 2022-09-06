@@ -10,4 +10,5 @@ urlpatterns=[
     path("create",views.VideoCreate.as_view(),name="video-create"),
     path('update/<int:pk>', views.VideoUpdate.as_view(), name="video-update"),
     path('delete/<int:pk>', views.VideoDelete.as_view(), name="video-delete"),
+    path('delete/notif/<int:pk>',views.delete_notification,name="delete-notif"),
 ]

@@ -3,7 +3,8 @@ from django.views.generic import ListView,CreateView,DeleteView,UpdateView,Detai
 from .mixins import SuperUserAccessMixin,AuthorAccessMixin,FormValidMixin,FieldsMixin
 from home.models import Video
 from django.urls import reverse_lazy
-
+from accounts.models import Notification
+from django.http import JsonResponse
 class AllVideos(ListView):
     context_object_name= "video"
     template_name= "video/all-videos.html"
@@ -43,3 +44,8 @@ class VideoDelete(SuperUserAccessMixin, DeleteView):
     model = Video
     success_url = reverse_lazy('accounts:profile')
     template_name = "registration/article_confirm_delete.html"
+
+def delete_notification(request,pk):
+    notif=Notification.objects.get(id=pk)
+    notif.delete()
+    return JsonResponse({"response":"deleted"})
