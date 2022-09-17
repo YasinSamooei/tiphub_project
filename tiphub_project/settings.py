@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "allauth", 
     "allauth.account", 
     "allauth.socialaccount", 
+    'django_s3_storage',
     #---------------------------------
     # social providers
     "allauth.socialaccount.providers.github",
@@ -213,3 +214,10 @@ SOCIALACCOUNT_PROVIDERS = {
         ]
     }
 }
+
+
+DEFAULT_FILE_STORAGE="django_s3_storage.storage.S3Storage"
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
+AWS_S3_ENDPOINT_URL = config('AWS_S3_ENDPOINT_URL')
+AWS_S3_BUCKET_NAME = "ys-tip-hub"
