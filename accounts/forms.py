@@ -65,7 +65,10 @@ class EditUserForm(forms.ModelForm):
     def __init__(self,*args,**kwargs):
         super(EditUserForm,self).__init__(*args,**kwargs)
         self.fields['email'].disabled=True
-
+        self.fields['email'].required=False
+        self.fields['image'].required=False
+        self.fields['phoneNumber'].required=False
+        self.fields['full_name'].required=False
     class Meta:  
         model = User  
         fields = ('username', 'email', 'full_name', 'phoneNumber','image') 
