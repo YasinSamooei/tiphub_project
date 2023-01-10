@@ -49,7 +49,7 @@
                                 </a>
 
                             </div>
-                            <a href="video-detail.html">
+                            <a href="{% if request.user.is_authenticated %}{{video.get_absolute_url}}{% else %}{% url 'accounts:register' %}{% endif %}">
                                 <h5 class="video-card-title m-2">{{video.description|truncatechars:45|safe}}</h5>
                             </a>
                             <div class="my-3 pb-3 mx-2">
@@ -109,7 +109,7 @@
                                 </a>
 
                             </div>
-                            <a href="video-detail.html">
+                            <a href="{% if request.user.is_authenticated %}{{video.get_absolute_url}}{% else %}{% url 'accounts:register' %}{% endif %}">
                                 <h5 class="video-card-title m-2">{{video.description|truncatechars:45|safe}}</h5>
                             </a>
                             <div class="my-3 pb-3 mx-2">
