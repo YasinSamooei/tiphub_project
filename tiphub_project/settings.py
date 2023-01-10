@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     # social providers
     "allauth.socialaccount.providers.github",
     'allauth.socialaccount.providers.linkedin_oauth2', 
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -189,6 +190,9 @@ SITE_ID = 1
 ACCOUNT_EMAIL_VERIFICATION = "none"
 LOGIN_REDIRECT_URL = "/"
 ACCOUNT_LOGOUT_ON_GET = True
+SOCIALACCOUNT_QUERY_EMAIL = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
 
 SOCIALACCOUNT_PROVIDERS = {
     'github': {
@@ -212,6 +216,15 @@ SOCIALACCOUNT_PROVIDERS = {
             'picture-url',
             'public-profile-url',
         ]
+    },
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
     }
 }
 
